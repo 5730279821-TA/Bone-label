@@ -95,6 +95,8 @@ color = (255,0,0)
 capture = False
 
 screenres = (win32api.GetSystemMetrics(0),win32api.GetSystemMetrics(1))
+print(str(win32api.GetSystemMetrics(0)))
+print(str(win32api.GetSystemMetrics(1)))
 dest = (0,0)
 filename =""
 draw = False
@@ -153,9 +155,9 @@ while True:
                 raise
         filename=st+".jpeg"
         im.save("data/" + st + "/0riginal_"+"image_"+str(ccount)+".jpeg")
-        im.save("data/" + st + "/" + filename)
+        im.save("data/"+st+"/"+"FullImage"".jpeg")
         screen = pygame.display.set_mode(screenres, pygame.FULLSCREEN,32)
-        image = pygame.image.load("data/"+st+"/"+"image_"+str(ccount)+".jpeg")
+        image = pygame.image.load("data/"+st+"/"+"FullImage"".jpeg")
         screen.blit(image,image.get_rect())
         line.clear()
         capture = False
@@ -173,7 +175,7 @@ while True:
                 x = size[0]
                 y = size[1]
                 inipos = (int((screenres[0] - x) / 2), int((screenres[1] - y) / 2))
-                line.add((end[0]-inipos[0],end[1]-inipos[1]))
+                line.add((end[0]-(inipos[0]-topleft[0]),end[1]-(inipos[1]-topleft[1])))
         else:
             start =(-1,-1)
     elif (topleftget):
@@ -232,16 +234,16 @@ while True:
                     pygame.display.flip()
                     level = scale()
                     saveDataToNewFile(st, level, line,tlp,brp)
-                    ccount = ccount + 1
                     print("Level of image" + filename + " is " + str(level))
                     screen = pygame.display.set_mode(screenres, pygame.FULLSCREEN, 32)
-                    image = pygame.image.load("data/" + st + "/" + filename)
+                    image = pygame.image.load("data/"+st+"/"+"FullImage"".jpeg")
                     screen.blit(image, image.get_rect())
                     line.clear()
                     for point in drawpair:
                         pygame.draw.line(screen, color, (point[0][0]-(inipos[0]-topleft[0]),point[0][1]-(inipos[1]-topleft[1])),(point[1][0]-(inipos[0]-topleft[0]),point[1][1]-(inipos[1]-topleft[1])), 2)
-                    pygame.image.save(screen, "data/" + st + "/" + filename)
+                    pygame.image.save(screen, "data/"+st+"/"+"FullImage"".jpeg")
                     drawpair.clear()
+                    ccount = ccount + 1
                     resize = True
                 else:
                     print("Please draw in the image")
